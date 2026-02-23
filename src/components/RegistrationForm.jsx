@@ -40,7 +40,7 @@ function calcularEdad(fechaNacimiento) {
 export default function RegistrationForm() {
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [overlayState, setOverlayState] = useState(null); // null | 'loading' | 'success'
 
   const [repos, setRepos] = useState([]);
   const [loadingRepos, setLoadingRepos] = useState(false);
@@ -160,16 +160,19 @@ export default function RegistrationForm() {
     e.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true);
+      setOverlayState('loading');
       console.log('Formulario enviado:', { ...formData, repositorios: selectedRepos });
       setTimeout(() => {
-        setFormData(EMPTY_FORM);
-        setRepos([]);
-        setSelectedRepos([]);
-        setReposFetched(false);
-        setReposError('');
-        setSubmitted(false);
-      }, 3000);
+        setOverlayState('success');
+        setTimeout(() => {
+          setOverlayState(null);
+          setFormData(EMPTY_FORM);
+          setRepos([]);
+          setSelectedRepos([]);
+          setReposFetched(false);
+          setReposError('');
+        }, 2200);
+      }, 2000);
     } else {
       setErrors(newErrors);
     }
@@ -196,7 +199,7 @@ export default function RegistrationForm() {
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-hero opacity-60 blur-3xl" />
 
       <div className="relative z-10 w-full max-w-3xl px-2 sm:px-4">
-        <div className="bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 md:p-12 transition-colors duration-200">
+        <div className={`bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 md:p-12 transition-all duration-300 ${overlayState ? 'blur-sm scale-[0.98] pointer-events-none' : ''}`}>
 
           {/* Encabezado */}
           <div className="mb-8">
@@ -207,13 +210,6 @@ export default function RegistrationForm() {
               Completa tus datos para inscribirte. Todos los campos son obligatorios.
             </p>
           </div>
-
-          {/* Mensaje de éxito */}
-          {submitted && (
-            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-800 text-green-700 dark:text-green-400 rounded-lg text-sm">
-              ✓ ¡Registro exitoso! Gracias por inscribirte.
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} noValidate className="space-y-10">
 
@@ -478,6 +474,40 @@ export default function RegistrationForm() {
         </footer>
 
       </div>
+
+      {/* Overlay: loader / éxito */}
+      {overlayState && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-hero/75 backdrop-blur-sm px-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-10 flex flex-col items-center gap-6 w-full max-w-xs text-center">
+
+            {overlayState === 'loading' && (
+              <>
+                <div className="w-16 h-16 rounded-full border-4 border-gray-200 dark:border-gray-700 border-t-brand animate-spin" />
+                <div>
+                  <p className="text-lg font-semibold text-gray-800 dark:text-white">Enviando registro...</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">Por favor espera un momento</p>
+                </div>
+              </>
+            )}
+
+            {overlayState === 'success' && (
+              <>
+                <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center">
+                  <svg className="w-9 h-9 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-gray-800 dark:text-white">¡Datos enviados correctamente!</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">Tu registro fue recibido con éxito.</p>
+                </div>
+              </>
+            )}
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
