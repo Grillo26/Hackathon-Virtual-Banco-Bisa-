@@ -188,9 +188,15 @@ export default function RegistrationForm() {
   const edadActual = formData.fechaNacimiento ? calcularEdad(formData.fechaNacimiento) : null;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200 py-12 px-4 flex flex-col items-center justify-center">
-      <div className="w-full max-w-3xl p-10">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/40 p-12 transition-colors duration-200">
+    <div className="relative min-h-screen bg-hero overflow-hidden py-12 px-4 flex flex-col items-center justify-center">
+
+      {/* Blobs decorativos desenfocados */}
+      <div className="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-brand opacity-20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -right-24 w-[560px] h-[560px] rounded-full bg-brand opacity-15 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-hero opacity-60 blur-3xl" />
+
+      <div className="relative z-10 w-full max-w-3xl px-4">
+        <div className="bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-12 transition-colors duration-200">
 
           {/* Encabezado */}
           <div className="mb-8">
