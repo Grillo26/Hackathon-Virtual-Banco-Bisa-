@@ -195,8 +195,8 @@ export default function RegistrationForm() {
       <div className="pointer-events-none absolute -bottom-40 -right-24 w-[560px] h-[560px] rounded-full bg-brand opacity-15 blur-3xl" />
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-hero opacity-60 blur-3xl" />
 
-      <div className="relative z-10 w-full max-w-3xl px-4">
-        <div className="bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-12 transition-colors duration-200">
+      <div className="relative z-10 w-full max-w-3xl px-2 sm:px-4">
+        <div className="bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 md:p-12 transition-colors duration-200">
 
           {/* Encabezado */}
           <div className="mb-8">
@@ -453,11 +453,11 @@ export default function RegistrationForm() {
             </section>
 
             {/* Acciones */}
-            <div className="flex gap-4 justify-between pt-6">
-              <Button type="button" variant="secondary" size="lg" onClick={handleClear}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-between pt-6">
+              <Button type="button" variant="secondary" size="lg" onClick={handleClear} className="w-full sm:w-auto">
                 Limpiar
               </Button>
-              <Button type="submit" variant="primary" size="lg">
+              <Button type="submit" variant="primary" size="lg" className="w-full sm:w-auto">
                 Registrarse
               </Button>
             </div>
@@ -467,10 +467,10 @@ export default function RegistrationForm() {
 
         {/* Footer */}
         <footer className="mt-6 px-2 text-center">
-          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+          <p className="text-xs font-semibold text-white/60 mb-1">
             Descargo de responsabilidad
           </p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">
+          <p className="text-xs text-white/40 leading-relaxed">
             Este prototipo es para evaluación en el proceso de selección. Es importante aclarar que
             no existe relación directa entre el Banco y la Universidad del Rosario de Colombia, y
             que la Hackathon es solo ilustrativa.
